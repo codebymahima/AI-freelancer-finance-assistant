@@ -47,7 +47,7 @@ function ChatAssistant() {
         {
           role: 'assistant',
           content:
-            'Gemini is currently busy due to high demand. Please try again in a few moments.'
+            'The AI assistant is temporarily unavailable because the current API quota has been reached. Please try again later. All other application features remain fully functional. In the meanwhile here’s a quick suggestion: compare total fees, exchange rate, transfer speed, and client convenience before choosing a payment method. For Indian freelancers, Wise or Payoneer are often better for international payments, while PayPal is useful when client convenience matters most.'
         }
       ])
     } finally {
