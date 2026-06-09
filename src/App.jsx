@@ -140,7 +140,7 @@ function App() {
   <div className="min-h-screen bg-slate-950 text-white">
     <Sidebar activePage={activePage} setActivePage={handlePageChange} />
 
-    <main className="pt-48 sm:pt-44 lg:pt-8 lg:ml-64 p-4 sm:p-6 lg:p-8">
+    <main className="p-4 sm:p-6 lg:p-8 lg:ml-64">
       <div className="flex justify-end mb-6">
         <div className="flex flex-wrap items-center gap-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2">
           <span className="text-sm text-gray-300 break-all">{userEmail}</span>

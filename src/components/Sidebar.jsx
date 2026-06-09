@@ -16,7 +16,7 @@ const menuItems = [
 
 function Sidebar({ activePage, setActivePage }) {
   return (
-    <aside className="fixed top-0 left-0 w-full lg:w-64 bg-slate-900 border-b lg:border-b-0 lg:border-r border-gray-700 p-4 lg:p-6 z-50">
+    <aside className="sticky top-0 lg:fixed lg:top-0 lg:left-0 w-full lg:w-64 lg:h-screen bg-slate-900 border-b lg:border-b-0 lg:border-r border-gray-700 p-4 lg:p-6 z-50">
       <div className="mb-4 lg:mb-10">
         <h1 className="text-xl lg:text-2xl font-bold text-sky-400">
           FreelanceAI
