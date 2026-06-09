@@ -137,26 +137,26 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar activePage={activePage} setActivePage={handlePageChange} />
+  <div className="min-h-screen bg-slate-950 text-white">
+    <Sidebar activePage={activePage} setActivePage={handlePageChange} />
 
-      <main className="flex-1 p-8 overflow-auto">
-        <div className="flex justify-end mb-6">
-          <div className="flex items-center gap-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2">
-            <span className="text-sm text-gray-300">{userEmail}</span>
-            <button
-              onClick={handleLogout}
-              className="text-sm text-red-400 hover:text-red-300"
-            >
-              Logout
-            </button>
-          </div>
+    <main className="pt-48 sm:pt-44 lg:pt-8 lg:ml-64 p-4 sm:p-6 lg:p-8">
+      <div className="flex justify-end mb-6">
+        <div className="flex flex-wrap items-center gap-3 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2">
+          <span className="text-sm text-gray-300 break-all">{userEmail}</span>
+          <button
+            onClick={handleLogout}
+            className="text-sm text-red-400 hover:text-red-300"
+          >
+            Logout
+          </button>
         </div>
+      </div>
 
-        {renderPage()}
-      </main>
-    </div>
-  )
+      {renderPage()}
+    </main>
+  </div>
+)
 }
 
 export default App

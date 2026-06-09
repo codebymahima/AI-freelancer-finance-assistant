@@ -168,7 +168,7 @@ function InvoiceGenerator({ userEmail }) {
                         <div>
                             <label className="block text-sm text-gray-400 mb-3">Line Items</label>
                             {invoice.items.map((item, index) => (
-                                <div key={index} className="flex gap-2 mb-2">
+                                <div key={index} className="grid grid-cols-1 sm:grid-cols-[1fr_90px_110px_auto] gap-2 mb-2">
                                     <input
                                         type="text"
                                         value={item.description}
@@ -180,20 +180,20 @@ function InvoiceGenerator({ userEmail }) {
                                         type="number"
                                         value={item.hours}
                                         onChange={(e) => updateItem(index, 'hours', e.target.value)}
-                                        className="w-20 bg-slate-900 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500"
+                                        className="w-full bg-slate-900 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500"
                                         placeholder="Hrs"
                                     />
                                     <input
                                         type="number"
                                         value={item.rate}
                                         onChange={(e) => updateItem(index, 'rate', e.target.value)}
-                                        className="w-24 bg-slate-900 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500"
+                                        className="w-full bg-slate-900 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500"
                                         placeholder="$/hr"
                                     />
                                     {invoice.items.length > 1 && (
                                         <button
                                             onClick={() => removeItem(index)}
-                                            className="px-3 py-2 text-red-400 hover:bg-red-400/20 rounded-lg"
+                                            className="w-full sm:w-auto px-3 py-2 text-red-400 hover:bg-red-400/20 rounded-lg"
                                         >
                                             ×
                                         </button>

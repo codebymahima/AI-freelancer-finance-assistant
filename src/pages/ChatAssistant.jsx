@@ -7,7 +7,7 @@ const initialMessages = [
   {
     role: 'assistant',
     content:
-      "Hi! I'm your AI finance assistant. Ask me about freelance pricing, invoices, international payments, payment fees, taxes, or managing irregular income."
+      "Hi! I'm your AI finance assistant. Ask me about pricing, invoices, international payments, taxes, or managing irregular income."
   }
 ]
 
@@ -17,19 +17,14 @@ function ChatAssistant() {
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef(null)
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   useEffect(() => {
-    scrollToBottom()
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
   const handleSend = async () => {
     if (!input.trim() || isTyping) return
 
     const question = input.trim()
-
     setMessages((prev) => [...prev, { role: 'user', content: question }])
     setInput('')
     setIsTyping(true)
@@ -68,16 +63,18 @@ function ChatAssistant() {
   }
 
   return (
-    <div className="h-[calc(100vh-8rem)] flex flex-col">
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold">AI Finance Assistant</h2>
-        <p className="text-gray-400 mt-1">
+    <div className="flex flex-col min-h-[calc(100vh-14rem)] lg:h-[calc(100vh-8rem)]">
+      <div className="mb-5">
+        <h2 className="text-3xl sm:text-4xl lg:text-3xl font-bold leading-tight">
+          AI Finance Assistant
+        </h2>
+        <p className="text-gray-400 mt-2 text-sm sm:text-base">
           Get real AI-powered answers to your freelance finance questions.
         </p>
       </div>
 
-      <Card className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 overflow-y-auto space-y-4 mb-4">
+      <Card className="flex-1 flex flex-col min-h-130 sm:min-h-140 overflow-hidden">
+        <div className="flex-1 overflow-y-auto space-y-4 mb-4 pr-1">
           {messages.map((message, index) => (
             <div
               key={index}
@@ -86,13 +83,15 @@ function ChatAssistant() {
               }`}
             >
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                className={`max-w-[92%] sm:max-w-[80%] rounded-2xl px-4 py-3 text-sm sm:text-base leading-relaxed ${
                   message.role === 'user'
                     ? 'bg-sky-600 text-white'
                     : 'bg-slate-900 text-gray-100'
                 }`}
               >
-                <p className="whitespace-pre-wrap">{message.content}</p>
+                <p className="whitespace-pre-wrap wrap-break-word">
+                  {message.content}
+                </p>
               </div>
             </div>
           ))}
@@ -112,20 +111,20 @@ function ChatAssistant() {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="flex gap-3 pt-4 border-t border-gray-700">
+        <div className="flex gap-2 pt-4 border-t border-gray-700">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyPress}
-            placeholder="Ask about invoices, fees, pricing..."
-            className="flex-1 bg-slate-900 border border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500"
+            placeholder="Ask about invoices, fees..."
+            className="min-w-0 flex-1 bg-slate-900 border border-gray-700 rounded-xl px-4 py-3 text-sm sm:text-base focus:outline-none focus:border-sky-500"
           />
 
           <button
             onClick={handleSend}
             disabled={!input.trim() || isTyping}
-            className="bg-sky-600 text-white px-6 py-3 rounded-xl hover:bg-sky-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="shrink-0 flex items-center justify-center bg-sky-600 text-white px-4 sm:px-6 py-3 rounded-xl hover:bg-sky-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <PaperAirplaneIcon className="w-5 h-5" />
           </button>

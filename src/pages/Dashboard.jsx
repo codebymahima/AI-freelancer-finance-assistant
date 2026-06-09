@@ -200,11 +200,11 @@ function Dashboard({ userEmail }) {
                   <div className="flex items-start justify-between">
                     <div>
                       <p className="text-gray-400 text-sm">{stat.label}</p>
-                      <p className="text-2xl font-bold mt-1">{stat.value}</p>
+                      <p className="text-xl sm:text-2xl font-bold mt-1">{stat.value}</p>
                       <p className="text-sky-400 text-sm mt-1">{stat.change}</p>
                     </div>
 
-                    <div className="p-3 bg-sky-600/20 rounded-lg">
+                    <div className="p-2 sm:p-3 bg-sky-600/20 rounded-lg">
                       <Icon className="w-6 h-6 text-sky-400" />
                     </div>
                   </div>

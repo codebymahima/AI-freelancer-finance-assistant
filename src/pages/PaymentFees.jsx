@@ -70,17 +70,17 @@ function PaymentFees() {
                             </span>
                         </div>
 
-                        <div className="flex items-center justify-between gap-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
                             <div>
                                 <p className="text-gray-300">Best option for ${amount.toLocaleString()}</p>
-                                <p className="text-2xl font-bold text-sky-400 mt-1">
+                               <p className="text-xl sm:text-2xl font-bold text-sky-400 mt-1 leading-snug">
                                     {bestOption.name} — Save ${savings.toFixed(2)} vs {worstOption.name}
                                 </p>
                             </div>
 
-                            <div className="text-right">
+                            <div className="text-left sm:text-right">
                                 <p className="text-gray-300">You receive</p>
-                                <p className="text-3xl font-bold text-green-400">
+                                <p className="text-3xl sm:text-3xl font-bold text-green-400">
                                     ${bestOption.netAmount.toFixed(2)}
                                 </p>
                             </div>
@@ -89,7 +89,7 @@ function PaymentFees() {
                 </Card>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {calculations.map((p, index) => (
                     <Card
                         key={p.name}
@@ -104,7 +104,7 @@ function PaymentFees() {
                         )}
 
                         <div className="flex items-center gap-3 mb-4">
-                            <span className="text-3xl">{p.logo}</span>
+                            <span className="text-2xl sm:text-3xl">{p.logo}</span>
                             <div>
                                 <h3 className="font-semibold text-lg">{p.name}</h3>
                                 <p className="text-sm text-gray-500">{p.description}</p>
