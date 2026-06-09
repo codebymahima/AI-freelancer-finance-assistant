@@ -47,7 +47,7 @@ function ChatAssistant() {
         {
           role: 'assistant',
           content:
-            'Something went wrong while connecting to Gemini. Please check your API key and try again.'
+            'Gemini is currently busy due to high demand. Please try again in a few moments.'
         }
       ])
     } finally {
