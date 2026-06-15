@@ -8,7 +8,7 @@ import {
   ArrowTrendingUpIcon
 } from '@heroicons/react/24/outline'
 
-function Dashboard({ userEmail }) {
+function Dashboard({ userEmail, setActivePage }) {
   const [invoices, setInvoices] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -135,7 +135,18 @@ function Dashboard({ userEmail }) {
           </div>
 
           <Card>
-            <h3 className="text-xl font-semibold mb-4">Recent Invoices</h3>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+              <h3 className="text-xl font-semibold">
+                Recent Invoices
+              </h3>
+
+              <button
+                onClick={() => setActivePage('history')}
+                className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                View All Invoices
+              </button>
+            </div>
 
             {invoices.length === 0 ? (
               <p className="text-gray-400">
@@ -166,6 +177,7 @@ function Dashboard({ userEmail }) {
               </div>
             )}
           </Card>
+
         </>
       )}
     </div>

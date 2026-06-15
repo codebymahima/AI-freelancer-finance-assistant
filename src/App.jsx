@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Sidebar from './components/Sidebar'
 import Dashboard from './pages/Dashboard'
 import InvoiceGenerator from './pages/InvoiceGenerator'
+import InvoiceHistory from './pages/InvoiceHistory'
 import EarningsEstimator from './pages/EarningsEstimator'
 import ChatAssistant from './pages/ChatAssistant'
 import PaymentFees from './pages/PaymentFees'
@@ -81,9 +82,6 @@ function App() {
         email,
         password,
         options: {
-          data: {
-            full_name: nameInput.trim()
-          }
         }
       })
 
@@ -115,9 +113,11 @@ function App() {
   const renderPage = () => {
     switch (activePage) {
       case 'dashboard':
-        return <Dashboard userEmail={userEmail} />
+        return <Dashboard userEmail={userEmail} setActivePage={handlePageChange}/>
       case 'invoices':
         return <InvoiceGenerator userEmail={userEmail} />
+      case 'history':
+        return <InvoiceHistory userEmail={userEmail} />
       case 'earnings':
         return <EarningsEstimator />
       case 'chat':
@@ -125,7 +125,7 @@ function App() {
       case 'fees':
         return <PaymentFees />
       default:
-        return <Dashboard userEmail={userEmail} />
+        return <Dashboard userEmail={userEmail} setActivePage={handlePageChange}/>
     }
   }
 

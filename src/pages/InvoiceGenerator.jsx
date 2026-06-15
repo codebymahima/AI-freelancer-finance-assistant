@@ -146,11 +146,13 @@ function InvoiceGenerator({ userEmail }) {
     const { error } = await supabase.from('invoices').insert([
       {
         user_email: userEmail,
+        invoice_number: invoiceNumber,
         client_name: invoice.clientName,
         client_email: invoice.clientEmail,
         amount: total,
         due_date: invoice.dueDate,
         notes: invoice.notes,
+        items: invoice.items,
         status: 'saved'
       }
     ])

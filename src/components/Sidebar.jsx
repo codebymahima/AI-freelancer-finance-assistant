@@ -3,12 +3,14 @@ import {
   DocumentTextIcon,
   CalculatorIcon,
   ChatBubbleLeftRightIcon,
-  CreditCardIcon
+  CreditCardIcon, 
+  ArchiveBoxIcon
 } from '@heroicons/react/24/outline'
 
 const menuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: HomeIcon },
   { id: 'invoices', label: 'Invoices', icon: DocumentTextIcon },
+  { id: 'history', label: 'Invoice History', icon: ArchiveBoxIcon },
   { id: 'earnings', label: 'Earnings', icon: CalculatorIcon },
   { id: 'chat', label: 'AI Assistant', icon: ChatBubbleLeftRightIcon },
   { id: 'fees', label: 'Payment Fees', icon: CreditCardIcon }
