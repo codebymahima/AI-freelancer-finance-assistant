@@ -34,26 +34,59 @@ function InvoiceHistory({ userEmail }) {
     fetchInvoices()
   }, [userEmail])
 
+  const getInvoiceStatus = (invoice) => {
+    if (invoice.payment_status === 'Paid') return 'Paid'
+
+    if (invoice.due_date && new Date(invoice.due_date) < new Date()) {
+      return 'Overdue'
+    }
+
+    return 'Pending'
+  }
+
   const handleDeleteInvoice = async (invoiceId) => {
-      const confirmDelete = window.confirm("Are you sure you want to delete this invoice?");
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this invoice?'
+    )
 
-      if (!confirmDelete) return;
+    if (!confirmDelete) return
 
-      const { error } = await supabase
-        .from("invoices")
-        .delete()
-        .eq("id", invoiceId);
+    const { error } = await supabase
+      .from('invoices')
+      .delete()
+      .eq('id', invoiceId)
 
-      if (error) {
-        console.error("Delete error:", error.message);
-        alert("Failed to delete invoice");
-        return;
-      }
+    if (error) {
+      console.error('Delete error:', error.message)
+      alert('Failed to delete invoice')
+      return
+    }
 
-      setInvoices((prev) => prev.filter((invoice) => invoice.id !== invoiceId));
+    setInvoices((prev) => prev.filter((invoice) => invoice.id !== invoiceId))
 
-      alert("Invoice deleted successfully");
-    };
+    alert('Invoice deleted successfully')
+  }
+
+  const markAsPaid = async (invoiceId) => {
+    const { error } = await supabase
+      .from('invoices')
+      .update({ payment_status: 'Paid' })
+      .eq('id', invoiceId)
+
+    if (error) {
+      console.error('Update error:', error.message)
+      alert('Failed to mark invoice as paid')
+      return
+    }
+
+    setInvoices((prev) =>
+      prev.map((invoice) =>
+        invoice.id === invoiceId
+          ? { ...invoice, payment_status: 'Paid' }
+          : invoice
+      )
+    )
+  }
 
   const formatDate = (dateValue) => {
     if (!dateValue) return 'Not set'
@@ -290,7 +323,7 @@ function InvoiceHistory({ userEmail }) {
       <div>
         <h2 className="text-3xl font-bold">Invoice History</h2>
         <p className="text-gray-400 mt-1">
-          View, search, and download all saved invoices.
+          View, search, download, and manage all saved invoices.
         </p>
       </div>
 
@@ -309,54 +342,80 @@ function InvoiceHistory({ userEmail }) {
           <p className="text-gray-400">No invoices found.</p>
         ) : (
           <div className="space-y-4">
-            {filteredInvoices.map((invoice) => (
-              <div
-                key={invoice.id}
-                className="border border-slate-700 rounded-xl p-4"
-              >
-                <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-                  <div>
-                    <h3 className="font-semibold text-lg">
-                      {invoice.client_name}
-                    </h3>
+            {filteredInvoices.map((invoice) => {
+              const status = getInvoiceStatus(invoice)
 
-                    <p className="text-gray-400 text-sm">
-                      {invoice.client_email || 'No email'}
-                    </p>
-
-                    <p className="text-gray-500 text-xs mt-1">
-                      {formatDate(invoice.created_at)}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 md:text-right">
+              return (
+                <div
+                  key={invoice.id}
+                  className="border border-slate-700 rounded-xl p-4"
+                >
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                     <div>
-                      <p className="text-green-400 font-bold text-xl">
-                        ${Number(invoice.amount || 0).toFixed(2)}
-                      </p>
+                      <h3 className="font-semibold text-lg">
+                        {invoice.client_name}
+                      </h3>
 
                       <p className="text-gray-400 text-sm">
-                        {invoice.items?.length || 0} item(s)
+                        {invoice.client_email || 'No email'}
+                      </p>
+
+                      <span
+                        className={`inline-block mt-2 px-2 py-1 rounded-full text-xs font-semibold ${
+                          status === 'Paid'
+                            ? 'bg-green-500/20 text-green-400'
+                            : status === 'Overdue'
+                            ? 'bg-red-500/20 text-red-400'
+                            : 'bg-yellow-500/20 text-yellow-400'
+                        }`}
+                      >
+                        {status}
+                      </span>
+
+                      <p className="text-gray-500 text-xs mt-2">
+                        {formatDate(invoice.created_at)}
                       </p>
                     </div>
 
-                    <button
-                      onClick={() => downloadSavedInvoice(invoice)}
-                      disabled={downloadingId === invoice.id}
-                      className="bg-sky-600 hover:bg-sky-700 disabled:opacity-60 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
-                    >
-                      {downloadingId === invoice.id ? 'Downloading...' : 'Download PDF'}
-                    </button>
-                    <button
-                      onClick={() => handleDeleteInvoice(invoice.id)}
-                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
-                    >
-                      Delete
-                    </button>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 md:text-right">
+                      <div>
+                        <p className="text-green-400 font-bold text-xl">
+                          ${Number(invoice.amount || 0).toFixed(2)}
+                        </p>
+
+                        <p className="text-gray-400 text-sm">
+                          {invoice.items?.length || 0} item(s)
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => downloadSavedInvoice(invoice)}
+                        disabled={downloadingId === invoice.id}
+                        className="bg-sky-600 hover:bg-sky-700 disabled:opacity-60 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+                      >
+                        {downloadingId === invoice.id ? 'Downloading...' : 'Download PDF'}
+                      </button>
+
+                      {status !== 'Paid' && (
+                        <button
+                          onClick={() => markAsPaid(invoice.id)}
+                          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+                        >
+                          Mark Paid
+                        </button>
+                      )}
+
+                      <button
+                        onClick={() => handleDeleteInvoice(invoice.id)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
       </Card>
