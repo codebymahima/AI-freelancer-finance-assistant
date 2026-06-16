@@ -34,6 +34,27 @@ function InvoiceHistory({ userEmail }) {
     fetchInvoices()
   }, [userEmail])
 
+  const handleDeleteInvoice = async (invoiceId) => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this invoice?");
+
+      if (!confirmDelete) return;
+
+      const { error } = await supabase
+        .from("invoices")
+        .delete()
+        .eq("id", invoiceId);
+
+      if (error) {
+        console.error("Delete error:", error.message);
+        alert("Failed to delete invoice");
+        return;
+      }
+
+      setInvoices((prev) => prev.filter((invoice) => invoice.id !== invoiceId));
+
+      alert("Invoice deleted successfully");
+    };
+
   const formatDate = (dateValue) => {
     if (!dateValue) return 'Not set'
 
@@ -45,16 +66,16 @@ function InvoiceHistory({ userEmail }) {
   }
 
   const generateInvoiceNumber = (invoice) => {
-  if (invoice.invoice_number) {
-    return invoice.invoice_number
-  }
+    if (invoice.invoice_number) {
+      return invoice.invoice_number
+    }
 
-  if (invoice.id) {
-    return `INV-${String(invoice.id).padStart(6, '0')}`
-  }
+    if (invoice.id) {
+      return `INV-${String(invoice.id).padStart(6, '0')}`
+    }
 
-  return `INV-${String(Date.now()).slice(-6)}`
-}
+    return `INV-${String(Date.now()).slice(-6)}`
+  }
 
   const downloadSavedInvoice = (invoice) => {
     if (downloadingId) return
@@ -325,6 +346,12 @@ function InvoiceHistory({ userEmail }) {
                       className="bg-sky-600 hover:bg-sky-700 disabled:opacity-60 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
                     >
                       {downloadingId === invoice.id ? 'Downloading...' : 'Download PDF'}
+                    </button>
+                    <button
+                      onClick={() => handleDeleteInvoice(invoice.id)}
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+                    >
+                      Delete
                     </button>
                   </div>
                 </div>
