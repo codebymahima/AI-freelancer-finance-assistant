@@ -142,13 +142,13 @@ Through this project, I gained practical experience with:
 - Designed a clean, responsive dashboard-style interface.
 
   ---
-## 🧠 What I Learned
-- Supabase authentication and database operations
-- Working with external AI APIs
-- Handling fallback logic for API failures
-- Generating downloadable PDFs from frontend data
-- Managing React state across dashboard features
-- Building practical tools around real freelancer finance problems
+## 🧠 Future Scope
+- Client analytics
+- Revenue trends
+- Top-paying clients
+- Monthly financial reports
+- Overdue payment insights
+- Service-wise revenue analysis
 
   ---
 
